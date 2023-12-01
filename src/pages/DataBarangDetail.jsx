@@ -17,30 +17,30 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { deleteRestock, getRestockDetailById } from "../modules/fetch";
+import { deleteDataBarang, getDataBarangDetailById } from "../modules/fetch";
 
-export default function BookDetails() {
-  const [book, setBook] = useState(null);
+export default function DataBarangDetails() {
+  const [data_barang, setDataBarang] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBook = async () => {
+    const fetchDataBarang = async () => {
       try {
-        const response = await getRestockDetailById(id);
-        setBook(response.book);
+        const response = await getDataBarangDetailById(id);
+        setDataBarang(response.data_barang);
         setLoading(false);
       } catch (e) {
         console.log(e);
       }
     };
-    fetchBook();
+    fetchDataBarang();
   }, [id]);
 
-  const handleDeleteBook = async () => {
+  const handleDeleteDataBarang = async () => {
     try {
-      await deleteBook(id);
+      await deleteDataBarang(id);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -55,22 +55,26 @@ export default function BookDetails() {
         <Flex my="6">
           <Box w="300px">
             <Image
-              src={`http://localhost:8000/${book.image}`}
-              alt={book.title}
+              src={`http://localhost:8000/${data_barang.image}`}
+              alt={data_barang.nama_barang}
             />
           </Box>
           <Box ml="8">
+            
             <Heading as="h1" size="lg">
-              {book.title}
+              {data_barang.nama_barang}
             </Heading>
+            
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {book.author}
+              {data_barang.stok}
             </Text>
+            
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {book.publisher}
+              {data_barang.id_kategori}
             </Text>
+            
             <Text fontSize="xl" fontWeight="semibold" color="gray.500" mb="4">
-              {book.year} | {book.pages} pages
+              {data_barang.id_supplier}
             </Text>
           </Box>
         </Flex>
@@ -86,14 +90,14 @@ export default function BookDetails() {
               <PopoverCloseButton />
               <PopoverHeader>Confirmation!</PopoverHeader>
               <PopoverBody>
-                Are you sure you want to delete this book?
+                Are you sure you want to delete this data barang?
               </PopoverBody>
-              <Button onClick={handleDeleteBook} colorScheme="red">
+              <Button onClick={handleDeleteDataBarang} colorScheme="red">
                 Delete
               </Button>
             </PopoverContent>
           </Popover>
-          <Link to={`/editbook/${id}`}>
+          <Link to={`/EditDataBarang/${id}`}>
             <Button>Edit</Button>
           </Link>
         </HStack>

@@ -17,7 +17,7 @@ const DataTableSupplier = () => {
         };
         fetchData();
     }, []);
-    console.log(fetchData)
+   
     return (
         <table border="1">
             <thead>

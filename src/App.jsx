@@ -35,7 +35,7 @@ function App() {
           <Route path={"/tambahdata_supplier"} element={<TambahDataSupplier />} />
           <Route path={"/newdatasupplier"} element={<NewDataSupplierPage />} />
           <Route path={"/data_supplier/:id"} element={<DataSupplierDetail />} />
-          <Route path={"/data_supplier/:id_supplier"} element={<EditDataSupplier />} />
+          <Route path={"/editdatasupplier/:id_supplier"} element={<EditDataSupplier />} />
           
         </Routes>
       </Router>

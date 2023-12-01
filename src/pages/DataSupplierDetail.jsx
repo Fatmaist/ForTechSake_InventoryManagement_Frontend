@@ -53,15 +53,13 @@ import {
           <Skeleton height="300px" my="6" />
         ) : (
           <Flex my="6">
-            {/* Ubah properties berikut sesuai dengan struktur data supplier Anda */}
-            <Box w="300px">
+            {/* <Box w="300px">
               <Image
                 src={`http://localhost:8000/${dataSupplier.image}`}
                 alt={dataSupplier.nama_supplier}
               />
-            </Box>
+            </Box> */}
             <Box ml="8">
-              {/* Sesuaikan properties berikut dengan data supplier */}
               <Heading as="h1" size="lg">
                 {dataSupplier.nama_supplier}
               </Heading>
@@ -96,7 +94,7 @@ import {
                 </Button>
               </PopoverContent>
             </Popover>
-            <Link to={`/data_supplier/${id}`}>
+            <Link to={`/editdatasupplier/${id}`}>
               <Button>Edit</Button>
             </Link>
           </HStack>

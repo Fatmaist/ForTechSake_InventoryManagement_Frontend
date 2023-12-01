@@ -35,7 +35,7 @@ export default function DataSupplierForm({ dataSupplierData }) {
       } catch (error) {
         toast({
           title: "Error",
-          description: error.response.data.message || "Something went wrong",
+          description: error.response?.data.message || "Something went wrong",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -63,7 +63,7 @@ export default function DataSupplierForm({ dataSupplierData }) {
     } catch (error) {
       toast({
         title: "Error",
-        description: error.response.data.message || "Something went wrong",
+        description: error.response?.data.message || "Something went wrong",
         status: "error",
         duration: 5000,
         isClosable: true,

@@ -1,44 +1,44 @@
 import { VStack, Table, Thead, Tbody, Tr, Th, Td, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box, Link } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { getAllRestock, deleteRestock } from "../modules/fetch"
+import { getAllDataBarang, deleteDataBarang } from "../modules/fetch"
 
-export default function Homepage() {
-    const [restocks, setRestocks] = useState([])
+export default function TambahData_DataBarang() {
+    const [dataBarangs, setDataBarangs] = useState([])
     const [startIndex, setStartIndex] = useState(0)
     const [searchQuery, setSearchQuery] = useState("")
-    const [filteredRestocks, setFilteredRestocks] = useState([])
+    const [filteredDataBarangs, setFilteredDataBarangs] = useState([])
 
     useEffect(() => {
-        const fetchRestocks = async () => {
-            const restocksData = await getAllRestock()
-            setRestocks(restocksData)
-            setFilteredRestocks(restocksData)
+        const fetchDataBarangs = async () => {
+            const dataBarangsData = await getAllDataBarang()
+            setDataBarangs(dataBarangsData)
+            setFilteredDataBarangs(dataBarangsData)
         }
-        fetchRestocks()
+        fetchDataBarangs()
     }, [])
 
-    const handleEdit = (id_restock) => {
-        console.log(`Edit item with ID: ${id_restock}`)
+    const handleEdit = (id_barang) => {
+        console.log(`Edit item with ID: ${id_barang}`)
     }
 
-    const handleDelete = async (id_restock) => {
+    const handleDelete = async (id_barang) => {
         try {
-            await deleteRestock(id_restock)
-            const updatedRestocks = restocks.filter((restock) => restock.id_restock !== id_restock)
-            setRestocks(updatedRestocks)
-            setFilteredRestocks(updatedRestocks)
+            await deleteDataBarang(id_barang)
+            const updatedDataBarangs = dataBarangs.filter((dataBarang) => dataBarang.id_barang !== id_barang)
+            setDataBarangs(updatedDataBarangs)
+            setFilteredDataBarangs(updatedDataBarangs)
         } catch (error) {
             console.error("Error deleting item:", error)
         }
     }
 
-    const handleContextMenu = (e, restock) => {
+    const handleContextMenu = (e, dataBarang) => {
         e.preventDefault()
-        console.log(`Right-clicked item with ID: ${restock.id_restock}`)
+        console.log(`Right-clicked item with ID: ${dataBarang.id_barang}`)
     }
 
     const onNext = () => {
-        if (startIndex + 5 < filteredRestocks.length) {
+        if (startIndex + 5 < filteredDataBarangs.length) {
             setStartIndex(startIndex + 5)
         }
     }
@@ -51,22 +51,22 @@ export default function Homepage() {
 
     const handleSearch = (query) => {
         setSearchQuery(query)
-        const filtered = restocks.filter(
-            (restock) =>
-                restock.id_barang.toString().includes(query.toLowerCase()) ||
-                restock.nama_barang.toLowerCase().includes(query.toLowerCase())
+        const filtered = dataBarangs.filter(
+            (dataBarang) =>
+                dataBarang.id_barang.toString().includes(query.toLowerCase()) ||
+                dataBarang.nama_barang.toLowerCase().includes(query.toLowerCase())
         )
-        setFilteredRestocks(filtered)
+        setFilteredDataBarangs(filtered)
         setStartIndex(0)
     }
 
     const currentPage = Math.ceil((startIndex + 1) / 5)
-    const totalPages = Math.ceil(filteredRestocks.length / 5)
+    const totalPages = Math.ceil(filteredDataBarangs.length / 5)
 
     return (
         <VStack w="100vw" align="center" bg="" marginTop="50px">
             <Button colorScheme="green" size="sm" marginRight="650px">
-                <Link to="/tambahdata_restockbarang">Tambah Data</Link>
+                <Link to="/tambahdata_databarang">Tambah Data</Link>
             </Button>
             <Box w="70%" display="flex" justifyContent="flex-end" alignItems="center" >
                 <p style={{ marginRight: '10px', fontWeight: 'bold' }}>Search : </p>
@@ -84,18 +84,21 @@ export default function Homepage() {
                     <Tr align="center">
                         <Th textAlign="center">ID Barang</Th>
                         <Th textAlign="center">Nama Barang</Th>
-                        <Th textAlign="center">Tanggal</Th>                    </Tr>
+                        <Th textAlign="center">Stok</Th>
+                        <Th textAlign="center">ID Kategori</Th>
+                        <Th textAlign="center">ID Supplier</Th>
+                    </Tr>
                 </Thead>
                 <Tbody>
-                    {filteredRestocks.slice(startIndex, startIndex + 5).map((restock) => (
-                        <Tr key={restock.id_restock} onContextMenu={(e) => handleContextMenu(e, restock)}>
-                            <Td>{restock.id_barang}</Td>
-                            <Td>{restock.nama_barang}</Td>
-                            <Td>{restock.tanggal}</Td>
-                            <Td>{restock.jumlah}</Td>
-                            <Td>{restock.status}</Td>
+                    {filteredDataBarangs.slice(startIndex, startIndex + 5).map((dataBarang) => (
+                        <Tr key={dataBarang.id_barang} onContextMenu={(e) => handleContextMenu(e, dataBarang)}>
+                            <Td>{dataBarang.id_barang}</Td>
+                            <Td>{dataBarang.nama_barang}</Td>
+                            <Td>{dataBarang.stok}</Td>
+                            <Td>{dataBarang.id_kategori}</Td>
+                            <Td>{dataBarang.id_supplier}</Td>
                             <Td>
-                                <Button colorScheme="blue" size="sm" onClick={() => handleEdit(restock.id_restock)}>
+                                <Button colorScheme="blue" size="sm" onClick={() => handleEdit(dataBarang.id_barang)}>
                                     Edit
                                 </Button>
                             </Td>
@@ -105,7 +108,7 @@ export default function Homepage() {
                                         Hapus
                                     </MenuButton>
                                     <MenuList>
-                                        <MenuItem onClick={() => handleDelete(restock.id_restock)}>Hapus</MenuItem>
+                                        <MenuItem onClick={() => handleDelete(dataBarang.id_barang)}>Hapus</MenuItem>
                                     </MenuList>
                                 </Menu>
                             </Td>

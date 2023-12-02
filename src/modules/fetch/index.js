@@ -1,76 +1,104 @@
-import { instance } from '../axios/index'
+import { instance } from "../axios/index";
 
-// Function for register user endpoint
-async function registerUser(name, email, password) {
+// Function to create Data Barang
+async function createDataBarang({
+  id_barang,
+  nama_barang,
+  stok,
+  id_kategori,
+  id_supplier,
+}) {
   try {
-    const response = await instance.post('/register', { name, email, password })
-    return response.data
+    const response = await instance.post("/data_barang", {
+      id_barang,
+      nama_barang,
+      stok,
+      id_kategori,
+      id_supplier,
+    });
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-// Function for login user endpoint
-async function loginUser(email, password) {
+// Function to get all Data Barang
+async function getAllDataBarang() {
   try {
-    const response = await instance.post('/login', { email, password })
-    return response.data
+    const response = await instance.get("/data_barang");
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-// Function for create Restock endpoint
-async function createRestock(formData) {
-  console.log('formData ==>', formData)
+// Function to edit Data Barang
+async function editDataBarang({
+  id_barang,
+  nama_barang,
+  stok,
+  id_kategori,
+  id_supplier,
+}) {
   try {
-    const response = await instance.post('/restock', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-    console.log('response==>', response.data)
-    return response.data
+    const response = await instance.put(`/data_barang/${id_barang}`, {
+      nama_barang,
+      stok,
+      id_kategori,
+      id_supplier,
+    });
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-// Function for get all Restock endpoint
-async function getAllRestock() {
+// Function to delete Data Barang
+async function deleteDataBarang(id_barang) {
   try {
-    const response = await instance.get('/restock')
-    return response.data
+    const response = await instance.delete(`/data_barang/${id_barang}`);
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-// Function for edit Restock endpoint
-async function editRestock(id_restock, id_barang, tanggal, nama_barang, jumlah, status) {
+// Function to get Data Barang detail by ID
+async function getDataBarangDetailById(id_barang) {
   try {
-    const response = await instance.put(`/restock/${id_restock}`, { id_barang, tanggal, nama_barang, jumlah, status })
-    return response.data
+    const response = await instance.get(`/data_barang/${id_barang}`);
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-// Function for delete Restock endpoint
-async function deleteRestock(id_restock) {
+// Function to get all Kategori Barang
+async function getAllDataKategori() {
   try {
-    const response = await instance.delete(`/restock/${id_restock}`)
-    return response.data
+    const response = await instance.get("/kategori_barang");
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-async function getRestockDetailById(id_restock) {
+// Function to get all Data Supplier
+async function getAllDataSupplier() {
   try {
-    const response = await instance.get(`/restock/${id_restock}`)
-    return response.data
+    const response = await instance.get("/data_supplier");
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong')
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-export { registerUser, loginUser, createRestock, getAllRestock, editRestock, deleteRestock,getRestockDetailById }
+export {
+  createDataBarang,
+  getAllDataBarang,
+  editDataBarang,
+  deleteDataBarang,
+  getDataBarangDetailById,
+  getAllDataKategori,
+  getAllDataSupplier,
+};

@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   Heading,
-  HStack,
   Image,
   Popover,
   PopoverArrow,
@@ -29,10 +28,10 @@ export default function DataBarangDetails() {
     const fetchDataBarang = async () => {
       try {
         const response = await getDataBarangDetailById(id);
-        setDataBarang(response.data_barang);
+        setDataBarang(response.data);
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
     fetchDataBarang();
@@ -43,7 +42,7 @@ export default function DataBarangDetails() {
       await deleteDataBarang(id);
       navigate("/");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -60,27 +59,23 @@ export default function DataBarangDetails() {
             />
           </Box>
           <Box ml="8">
-            
             <Heading as="h1" size="lg">
               {data_barang.nama_barang}
             </Heading>
-            
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {data_barang.stok}
+              Stok: {data_barang.stok}
             </Text>
-            
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {data_barang.id_kategori}
+              Kategori: {data_barang.nama_kategori} 
             </Text>
-            
-            <Text fontSize="xl" fontWeight="semibold" color="gray.500" mb="4">
-              {data_barang.id_supplier}
+            <Text fontSize="xl" fontWeight="semibold" color="gray.500">
+              Supplier: {data_barang.nama_supplier} 
             </Text>
           </Box>
         </Flex>
       )}
-      {localStorage.getItem('token') && (
-        <HStack>
+      {localStorage.getItem("token") && (
+        <Flex justifyContent="space-between">
           <Popover>
             <PopoverTrigger>
               <Button colorScheme="red">Delete</Button>
@@ -100,7 +95,7 @@ export default function DataBarangDetails() {
           <Link to={`/EditDataBarang/${id}`}>
             <Button>Edit</Button>
           </Link>
-        </HStack>
+        </Flex>
       )}
     </Box>
   );

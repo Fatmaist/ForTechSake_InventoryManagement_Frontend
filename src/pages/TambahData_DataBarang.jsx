@@ -3,18 +3,18 @@ import { useEffect, useState } from "react"
 import { getAllDataBarang, deleteDataBarang } from "../modules/fetch"
 
 export default function TambahData_DataBarang() {
-    const [dataBarangs, setDataBarangs] = useState([])
+    const [data_barang, setDataBarang] = useState([])
     const [startIndex, setStartIndex] = useState(0)
     const [searchQuery, setSearchQuery] = useState("")
-    const [filteredDataBarangs, setFilteredDataBarangs] = useState([])
+    const [filteredDataBarang, setFilteredDataBarang] = useState([])
 
     useEffect(() => {
-        const fetchDataBarangs = async () => {
-            const dataBarangsData = await getAllDataBarang()
-            setDataBarangs(dataBarangsData)
-            setFilteredDataBarangs(dataBarangsData)
+        const fetchDataBarang = async () => {
+            const dataBarangData = await getAllDataBarang()
+            setDataBarang(dataBarangData)
+            setFilteredDataBarang(dataBarangData)
         }
-        fetchDataBarangs()
+        fetchDataBarang()
     }, [])
 
     const handleEdit = (id_barang) => {
@@ -24,9 +24,9 @@ export default function TambahData_DataBarang() {
     const handleDelete = async (id_barang) => {
         try {
             await deleteDataBarang(id_barang)
-            const updatedDataBarangs = dataBarangs.filter((dataBarang) => dataBarang.id_barang !== id_barang)
-            setDataBarangs(updatedDataBarangs)
-            setFilteredDataBarangs(updatedDataBarangs)
+            const updatedDataBarang = data_barang.filter((dataBarang) => dataBarang.id_barang !== id_barang)
+            setDataBarang(updatedDataBarang)
+            setFilteredDataBarang(updatedDataBarang)
         } catch (error) {
             console.error("Error deleting item:", error)
         }
@@ -38,7 +38,7 @@ export default function TambahData_DataBarang() {
     }
 
     const onNext = () => {
-        if (startIndex + 5 < filteredDataBarangs.length) {
+        if (startIndex + 5 < filteredDataBarang.length) {
             setStartIndex(startIndex + 5)
         }
     }
@@ -51,17 +51,17 @@ export default function TambahData_DataBarang() {
 
     const handleSearch = (query) => {
         setSearchQuery(query)
-        const filtered = dataBarangs.filter(
+        const filtered = data_barang.filter(
             (dataBarang) =>
                 dataBarang.id_barang.toString().includes(query.toLowerCase()) ||
                 dataBarang.nama_barang.toLowerCase().includes(query.toLowerCase())
         )
-        setFilteredDataBarangs(filtered)
+        setFilteredDataBarang(filtered)
         setStartIndex(0)
     }
 
     const currentPage = Math.ceil((startIndex + 1) / 5)
-    const totalPages = Math.ceil(filteredDataBarangs.length / 5)
+    const totalPages = Math.ceil(filteredDataBarang.length / 5)
 
     return (
         <VStack w="100vw" align="center" bg="" marginTop="50px">
@@ -87,10 +87,11 @@ export default function TambahData_DataBarang() {
                         <Th textAlign="center">Stok</Th>
                         <Th textAlign="center">ID Kategori</Th>
                         <Th textAlign="center">ID Supplier</Th>
+                        <Th textAlign="center">Aksi</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {filteredDataBarangs.slice(startIndex, startIndex + 5).map((dataBarang) => (
+                    {filteredDataBarang.slice(startIndex, startIndex + 5).map((dataBarang) => (
                         <Tr key={dataBarang.id_barang} onContextMenu={(e) => handleContextMenu(e, dataBarang)}>
                             <Td>{dataBarang.id_barang}</Td>
                             <Td>{dataBarang.nama_barang}</Td>
@@ -101,8 +102,6 @@ export default function TambahData_DataBarang() {
                                 <Button colorScheme="blue" size="sm" onClick={() => handleEdit(dataBarang.id_barang)}>
                                     Edit
                                 </Button>
-                            </Td>
-                            <Td>
                                 <Menu>
                                     <MenuButton as={Button} colorScheme="red" size="sm">
                                         Hapus

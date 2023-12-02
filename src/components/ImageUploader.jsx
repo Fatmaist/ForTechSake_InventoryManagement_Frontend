@@ -5,12 +5,12 @@ export default function ImageUploader() {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (bookData?.image) {
-      const file = new File([], bookData.image, { type: 'image/*' });
+    if (data_barang?.image) {
+      const file = new File([], data_barang.image, { type: 'image/*' });
       setSelectedImage(URL.createObjectURL(file));
       fileInputRef.current.value = '';
     }
-  }, [bookData]);
+  }, [data_barang]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];

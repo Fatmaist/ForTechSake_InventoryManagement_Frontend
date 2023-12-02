@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -19,28 +18,28 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteRestock, getRestockDetailById } from "../modules/fetch";
 
-export default function BookDetails() {
-  const [book, setBook] = useState(null);
+export default function RestockDetails() {
+  const [restock, setRestock] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBook = async () => {
+    const fetchRestock = async () => {
       try {
         const response = await getRestockDetailById(id);
-        setBook(response.book);
+        setRestock(response.restock);
         setLoading(false);
       } catch (e) {
         console.log(e);
       }
     };
-    fetchBook();
+    fetchRestock();
   }, [id]);
 
-  const handleDeleteBook = async () => {
+  const handleDeleteRestock = async () => {
     try {
-      await deleteBook(id);
+      await deleteRestock(id_restock);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -54,23 +53,16 @@ export default function BookDetails() {
       ) : (
         <Flex my="6">
           <Box w="300px">
-            <Image
-              src={`http://localhost:8000/${book.image}`}
-              alt={book.title}
-            />
           </Box>
           <Box ml="8">
             <Heading as="h1" size="lg">
-              {book.title}
+              {restock.id_barang}
             </Heading>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {book.author}
+              {restock.tanggal}
             </Text>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              {book.publisher}
-            </Text>
-            <Text fontSize="xl" fontWeight="semibold" color="gray.500" mb="4">
-              {book.year} | {book.pages} pages
+              {restock.nama_barang}
             </Text>
           </Box>
         </Flex>
@@ -88,12 +80,12 @@ export default function BookDetails() {
               <PopoverBody>
                 Are you sure you want to delete this book?
               </PopoverBody>
-              <Button onClick={handleDeleteBook} colorScheme="red">
+              <Button onClick={handleDeleteRestock} colorScheme="red">
                 Delete
               </Button>
             </PopoverContent>
           </Popover>
-          <Link to={`/editbook/${id}`}>
+          <Link to={`/restock/${id_barang}`}>
             <Button>Edit</Button>
           </Link>
         </HStack>

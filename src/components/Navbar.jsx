@@ -61,13 +61,13 @@ const Navbar = () => {
           </AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left">
-              <Link to="/restock">Restock Data</Link>
+              <Link to="/data_barang">Item Data</Link>
             </Box>
           </AccordionButton>
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left">
-              Data Supplier
+              Data Barang
             </Box>
           </AccordionButton>
         </AccordionItem>

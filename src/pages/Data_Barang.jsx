@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const TabelRestockBarang = () => {
-    const [dataRestock, setDataRestock] = useState([]);
+const TabelDataBarang = () => {
+    const [data_barang, setDataBarang] = useState([]);
 
     useEffect(() => {
-        // Fungsi untuk mengambil data dari API backend (ganti URL dengan URL API Anda)
+        // Ganti URL dengan URL API backend Anda
         const fetchData = async () => {
-        try {
-            const response = await axios.get('localhost:3000/restock');
-            setDataRestock(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+            try {
+                const response = await axios.get('http://localhost:3010/api/data_barang');
+                setDataBarang(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
         fetchData();
@@ -20,36 +20,36 @@ const TabelRestockBarang = () => {
 
     return (
         <table border="1">
-        <thead>
-            <tr>
-            <th>No</th>
-            <th>Tanggal</th>
-            <th>Barang</th>
-            <th>Kategori</th>
-            <th>Jumlah</th>
-            <th>Status</th>
-            <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {dataRestock.map((item, index) => (
-            <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.tanggal}</td>
-                <td>{item.barang}</td>
-                <td>{item.kategori}</td>
-                <td>{item.jumlah}</td>
-                <td>{item.status}</td>
-                <td>
-                {/* Tambahkan tombol aksi sesuai kebutuhan */}
-                <button>Edit</button>
-                <button>Delete</button>
-                </td>
-            </tr>
-            ))}
-        </tbody>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>ID Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Stok</th>
+                    <th>ID Kategori</th>
+                    <th>ID Supplier</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {data_barang.map((item, index) => (
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item.id_barang}</td>
+                        <td>{item.nama_barang}</td>
+                        <td>{item.stok}</td>
+                        <td>{item.id_kategori}</td>
+                        <td>{item.id_supplier}</td>
+                        <td>
+                            {/* Tambahkan tombol aksi sesuai kebutuhan */}
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
         </table>
-    )
-}
+    );
+};
 
-export default TabelRestockBarang
+export default TabelDataBarang;

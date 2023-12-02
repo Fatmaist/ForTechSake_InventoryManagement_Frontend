@@ -1,50 +1,50 @@
-import { instance } from "../axios/index";
+import { instance } from '../axios/index';
 
 // Function for register user endpoint
 async function registerUser(name, email, password) {
   try {
-    const response = await instance.post("/register", {
+    const response = await instance.post('/register', {
       name,
       email,
       password,
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
 // Function for login user endpoint
 async function loginUser(email, password) {
   try {
-    const response = await instance.post("/login", { email, password });
+    const response = await instance.post('/login', { email, password });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
 // Function for create Restock endpoint
 async function createRestock(formData) {
-  console.log("formData ==>", formData);
+  console.log('formData ==>', formData);
   try {
-    const response = await instance.post("/restock", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+    const response = await instance.post('/restock', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
-    console.log("response==>", response.data);
+    console.log('response==>', response.data);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
 // Function for get all Restock endpoint
 async function getAllRestock() {
   try {
-    const response = await instance.get("/restock");
+    const response = await instance.get('/restock');
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -67,7 +67,7 @@ async function editRestock(
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -77,7 +77,7 @@ async function deleteRestock(id_restock) {
     const response = await instance.delete(`/restock/${id_restock}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -87,29 +87,28 @@ async function getRestockDetailById(id_restock) {
     const response = await instance.get(`/restock/${id_restock}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
 // Function for create Barang Masuk endpoint
 async function createBarangMasuk(formData) {
-  console.log("formData ==>", formData);
+  console.log('formData ==>', formData);
   try {
-    const response = await instance.post("/barangmasuk", formData);
-    console.log("response==>", response.data);
+    const response = await instance.post('/barangmasuk', formData);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
 // Function for get all Barang Masuk endpoint
 async function getAllBarangMasuk() {
   try {
-    const response = await instance.get("/barangmasuk");
+    const response = await instance.get('/barangmasuk');
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -131,7 +130,7 @@ async function editBarangMasuk(
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -141,7 +140,7 @@ async function deleteBarangMasuk(id_masuk) {
     const response = await instance.delete(`/barangmasuk/${id_masuk}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -151,7 +150,7 @@ async function getBarangMasukDetailById(id_masuk) {
     const response = await instance.get(`/barangmasuk/${id_masuk}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 

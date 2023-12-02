@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 // import PrivateRoute from "../src/components/PrivateRoute"
 import ListRestock from "./pages/ListRestock";
 import TambahData_Restock from "./pages/TambahData_Restock";
+
 import BarangMasukDetails from "./pages/BarangMasukDetail";
 import EditBarangMasuk from "./pages/EditBarangMasuk";
 import NewBarangMasukPage from "./pages/NewBarangMasuk";
@@ -32,6 +33,7 @@ function App() {
           <Route path={"/newrestock"} element={<NewRestockPage />} />
           <Route path={"/restock/:id"} element={<RestockDetails />} />
           <Route path={"/restock/:id_restock"} element={<EditRestock />} />
+
           <Route path={"/barangmasuk"} element={<ListBarangMasuk />} />
           <Route
             path={"/tambahdata_barangmasuk"}
@@ -40,7 +42,7 @@ function App() {
           <Route path={"/newbarangmasuk"} element={<NewBarangMasukPage />} />
           <Route path={"/barangmasuk/:id"} element={<BarangMasukDetails />} />
           <Route
-            path={"/barangmasuk/:id_masuk"}
+            path={"/editbarangmasuk/:id_masuk"}
             element={<EditBarangMasuk />}
           />
         </Routes>

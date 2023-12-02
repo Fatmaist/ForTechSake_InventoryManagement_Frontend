@@ -1,39 +1,22 @@
-import {
-  VStack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Text,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  HStack,
-  Input,
-  Box,
-  Link,
-} from "@chakra-ui/react";
+import { VStack, Table, Link, Thead, Tbody, Tr, Th, Td, Text, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { getAllBarangMasuk, deleteBarangMasuk } from "../modules/fetch";
 
-export default function Homepage() {
-  const [barangmasuk, setBarangMasuk] = useState([]);
+export default function ListBarangMasuk() {
+  const [barangMasuks, setBarangMasuks] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredBarangMasuk, setFilteredBarangMasuk] = useState([]);
+  const [filteredBarangMasuks, setFilteredBarangMasuks] = useState([]);
 
   useEffect(() => {
-    const fetchBarangMasuk = async () => {
-      const barangmasukData = await getAllBarangMasuk();
-      setBarangMasuk(barangmasukData);
-      setFilteredBarangMasuk(barangmasukData);
-    };
-    fetchBarangMasuk();
-  }, []);
+        const fetchBarangMasuks = async () => {
+            const BarangMasuksData = await getAllBarangMasuk()
+            setBarangMasuks(BarangMasuksData)
+            setFilteredBarangMasuks(BarangMasuksData)
+        }
+        fetchBarangMasuks()
+    }, [])
 
   const handleEdit = (id_masuk) => {
     console.log(`Edit item with ID: ${id_masuk}`);
@@ -42,23 +25,23 @@ export default function Homepage() {
   const handleDelete = async (id_masuk) => {
     try {
       await deleteBarangMasuk(id_masuk);
-      const updatedBarangMasuk = barangmasuk.filter(
-        (barangmasuk) => barangmasuk.id_masuk !== id_masuk
+      const updatedBarangMasuks = barangMasuks.filter(
+        (barangMasuk) => barangMasuk.id_masuk !== id_masuk
       );
-      setBarangMasuk(updatedBarangMasuk);
-      setFilteredBarangMasuk(updatedBarangMasuk);
+      setBarangMasuks(updatedBarangMasuks);
+      setFilteredBarangMasuks(updatedBarangMasuks);
     } catch (error) {
       console.error("Error deleting item:", error);
     }
   };
 
-  const handleContextMenu = (e, barangmasuk) => {
+  const handleContextMenu = (e, barangMasuk) => {
     e.preventDefault();
-    console.log(`Right-clicked item with ID: ${barangmasuk.id_masuk}`);
+    console.log(`Right-clicked item with ID: ${barangMasuk.id_masuk}`);
   };
 
   const onNext = () => {
-    if (startIndex + 5 < filteredBarangMasuk.length) {
+    if (startIndex + 5 < filteredBarangMasuks.length) {
       setStartIndex(startIndex + 5);
     }
   };
@@ -71,17 +54,17 @@ export default function Homepage() {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = barangmasuk.filter(
-      (barangmasuk) =>
-        barangmasuk.id_barang.toString().includes(query.toLowerCase()) ||
-        barangmasuk.nama_barang.toLowerCase().includes(query.toLowerCase())
+    const filtered = barangMasuks.filter(
+      (barangMasuk) =>
+        barangMasuk.id_barang.toString().includes(query.toLowerCase()) ||
+        barangMasuk.nama_barang.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredBarangMasuk(filtered);
+    setFilteredBarangMasuks(filtered);
     setStartIndex(0);
   };
 
   const currentPage = Math.ceil((startIndex + 1) / 5);
-  const totalPages = Math.ceil(filteredBarangMasuk.length / 5);
+  const totalPages = Math.ceil(filteredBarangMasuks.length / 5);
 
   return (
     <VStack w="100vw" align="center" bg="" marginTop="50px">
@@ -106,53 +89,57 @@ export default function Homepage() {
       <Table variant="simple" w="70%" p={6} marginRight={-300}>
         <Thead>
           <Tr align="center">
+            <Th textAlign="center">ID Masuk</Th>
             <Th textAlign="center">ID Barang</Th>
-            <Th textAlign="center">Nama Barang</Th>
             <Th textAlign="center">Tanggal</Th>
+            <Th textAlign="center">Nama Barang</Th>
             <Th textAlign="center">Jumlah</Th>
             <Th textAlign="center">Aksi</Th>
             <Th textAlign="center"></Th>
           </Tr>
         </Thead>
         <Tbody>
-          {filteredBarangMasuk
-            .slice(startIndex, startIndex + 5)
-            .map((barangmasuk) => (
-              <Tr
-                key={barangmasuk.id_masuk}
-                onContextMenu={(e) => handleContextMenu(e, barangmasuk)}
-              >
-                <Td>{barangmasuk.id_barang}</Td>
-                <Td>{barangmasuk.nama_barang}</Td>
-                <Td>{barangmasuk.tanggal}</Td>
-                <Td>{barangmasuk.jumlah}</Td>
-                <Td>
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={() => handleEdit(barangmasuk.id_masuk)}
-                  >
-                    <Link to={`/barangmasuk/${id}`}>
-                      <Button>Edit</Button>
-                    </Link>
-                  </Button>
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as={Button} colorScheme="red" size="sm">
-                      Hapus
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem
-                        onClick={() => handleDelete(barangmasuk.id_masuk)}
-                      >
+          {Array.isArray(filteredBarangMasuks) &&
+            filteredBarangMasuks
+              .slice(startIndex, startIndex + 5)
+              .map((barangMasuk) => (
+                <Tr
+                  key={barangMasuk.id_masuk}
+                  onContextMenu={(e) => handleContextMenu(e, barangMasuk)}
+                >
+                  <Td>{barangMasuk.id_masuk}</Td>
+                  <Td>{barangMasuk.id_barang}</Td>
+                  <Td>{barangMasuk.tanggal}</Td>
+                  <Td>{barangMasuk.nama_barang}</Td>
+                  <Td>{barangMasuk.jumlah}</Td>
+                  <Td>
+                    {/* Add your button to navigate to the form to edit data barang masuk */}
+                    <Button
+                      colorScheme="blue"
+                      size="sm"
+                      onClick={() => handleEdit(barangMasuk.id_masuk)}
+                    >
+                      <NavLink to={`/editbarangmasuk/${barangMasuk.id_masuk}`}>
+                        Edit
+                      </NavLink>
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Menu>
+                      <MenuButton as={Button} colorScheme="red" size="sm">
                         Hapus
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
-            ))}
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem
+                          onClick={() => handleDelete(barangMasuk.id_masuk)}
+                        >
+                          Hapus
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Td>
+                </Tr>
+              ))}
         </Tbody>
       </Table>
       <HStack>

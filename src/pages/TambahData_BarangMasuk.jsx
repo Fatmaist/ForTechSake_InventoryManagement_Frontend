@@ -1,162 +1,94 @@
-import {
-  VStack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  HStack,
-  Input,
-  Box,
-  Link,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { getAllBarangMasuk, deleteBarangMasuk } from "../modules/fetch";
+import { VStack, Button, Input, Box, Link } from "@chakra-ui/react";
+import { useState } from "react";
+import { createBarangMasuk } from "../modules/fetch";
 
-export default function Homepage() {
-  const [barangmasuk, setBarangMasuk] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredBarangMasuk, setFilteredBarangMasuk] = useState([]);
+export default function TambahDataBarangMasuk() {
+  const [formData, setFormData] = useState({
+    id_masuk: "",
+    id_barang: "",
+    tanggal: "",
+    nama_barang: "",
+    jumlah: "",
+  });
 
-  useEffect(() => {
-    const fetchBarangMasuk = async () => {
-      const barangmasukData = await getAllBarangMasuk();
-      setBarangMasuk(barangmasukData);
-      setFilteredBarangMasuk(barangmasukData);
-    };
-    fetchBarangMasuk();
-  }, []);
-
-  const handleEdit = (id_masuk) => {
-    console.log(`Edit item with ID: ${id_masuk}`);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleDelete = async (id_masuk) => {
-    try {
-      await deleteBarangMasuk(id_masuk);
-      const updatedBarangMasuk = barangmasuk.filter(
-        (barangmasuk) => barangmasuk.id_masuk !== id_masuk
-      );
-      setBarangMasuk(updatedBarangMasuk);
-      setFilteredBarangMasuk(updatedBarangMasuk);
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
-  };
-
-  const handleContextMenu = (e, barangmasuk) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Right-clicked item with ID: ${barangmasuk.id_masuk}`);
-  };
 
-  const onNext = () => {
-    if (startIndex + 5 < filteredBarangMasuk.length) {
-      setStartIndex(startIndex + 5);
+    try {
+      await createBarangMasuk(formData);
+
+      // Clear the form after successful submission
+      setFormData({
+        id_masuk: "",
+        id_barang: "",
+        tanggal: "",
+        nama_barang: "",
+        jumlah: "",
+      });
+
+      // Optionally, you can navigate to another page after submission
+      // Example: window.location.href = "/barangmasuk";
+    } catch (error) {
+      console.error("Error creating data barang masuk:", error);
     }
   };
-
-  const onPrevious = () => {
-    if (startIndex - 5 >= 0) {
-      setStartIndex(startIndex - 5);
-    }
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filtered = barangmasuk.filter(
-      (barangmasuk) =>
-        barangmasuk.id_barang.toString().includes(query.toLowerCase()) ||
-        barangmasuk.nama_barang.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredBarangMasuk(filtered);
-    setStartIndex(0);
-  };
-
-  const currentPage = Math.ceil((startIndex + 1) / 5);
-  const totalPages = Math.ceil(filteredBarangMasuk.length / 5);
 
   return (
     <VStack w="100vw" align="center" bg="" marginTop="50px">
       <Button colorScheme="green" size="sm" marginRight="650px">
         <Link to="/tambahdata_barangmasuk">Tambah Data</Link>
       </Button>
-      <Box w="70%" display="flex" justifyContent="flex-end" alignItems="center">
-        <p style={{ marginRight: "10px", fontWeight: "bold" }}>Search : </p>
-        <Input
-          placeholder="search by id barang or nama barang"
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-          w="300px"
-          marginRight="20px"
-          backgroundColor={"#DAF5FF"}
-        />
+      <Box w="70%">
+        <form onSubmit={handleSubmit}>
+          <VStack spacing={4} p={6}>
+            <Input
+              name="id_masuk"
+              type="number"
+              placeholder="ID Masuk"
+              value={formData.id_masuk}
+              onChange={handleChange}
+            />
+            <Input
+              name="id_barang"
+              type="number"
+              placeholder="ID Barang"
+              value={formData.id_barang}
+              onChange={handleChange}
+            />
+            <Input
+              name="tanggal"
+              type="text"
+              placeholder="tanggal"
+              value={formData.tanggal}
+              onChange={handleChange}
+            />
+            <Input
+              name="nama_barang"
+              type="text"
+              placeholder="Nama Barang"
+              value={formData.nama_barang}
+              onChange={handleChange}
+            />
+            <Input
+              name="jumlah"
+              type="text"
+              placeholder="jumlah"
+              value={formData.jumlah}
+              onChange={handleChange}
+            />
+            <Button type="submit" colorScheme="blue" size="sm">
+              Tambah Data Barang Masuk
+            </Button>
+          </VStack>
+        </form>
       </Box>
-
-      <Table variant="simple" w="70%" p={6} marginRight={-300}>
-        <Thead>
-          <Tr align="center">
-            <Th textAlign="center">ID Barang</Th>
-            <Th textAlign="center">Nama Barang</Th>
-            <Th textAlign="center">Tanggal</Th>{" "}
-          </Tr>
-        </Thead>
-        <Tbody>
-          {filteredBarangMasuk
-            .slice(startIndex, startIndex + 5)
-            .map((barangmasuk) => (
-              <Tr
-                key={barangmasuk.id_masuk}
-                onContextMenu={(e) => handleContextMenu(e, barangmasuk)}
-              >
-                <Td>{barangmasuk.id_barang}</Td>
-                <Td>{barangmasuk.nama_barang}</Td>
-                <Td>{barangmasuk.tanggal}</Td>
-                <Td>{barangmasuk.jumlah}</Td>
-                <Td>
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={() => handleEdit(barangmasuk.id_masuk)}
-                  >
-                    Edit
-                  </Button>
-                </Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as={Button} colorScheme="red" size="sm">
-                      Hapus
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem
-                        onClick={() => handleDelete(barangmasuk.id_masuk)}
-                      >
-                        Hapus
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
-            ))}
-        </Tbody>
-      </Table>
-      <HStack>
-        <Button colorScheme="blue" size="sm" onClick={onPrevious}>
-          Previous
-        </Button>
-        <Button colorScheme="blue" size="sm" onClick={onNext}>
-          Next
-        </Button>
-        <div>
-          Page {currentPage} of {totalPages}
-        </div>
-      </HStack>
     </VStack>
   );
 }

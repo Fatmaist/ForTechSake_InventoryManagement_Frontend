@@ -14,13 +14,13 @@ import {
   PopoverTrigger,
   Skeleton,
   Text,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { deleteBarangMasuk, getBarangMasukDetailById } from "../modules/fetch";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { deleteBarangMasuk, getBarangMasukDetailById } from '../modules/fetch';
 
-export default function BarangMasukDetails() {
-  const [barangmasuk, setBarangMasuk] = useState(null);
+export default function BarangMasukDetail() {
+  const [barangMasuk, setBarangMasuk] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function BarangMasukDetails() {
     const fetchBarangMasuk = async () => {
       try {
         const response = await getBarangMasukDetailById(id);
-        setBarangMasuk(response.barangmasuk);
+        setBarangMasuk(response.data);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -41,7 +41,7 @@ export default function BarangMasukDetails() {
   const handleDeleteBarangMasuk = async () => {
     try {
       await deleteBarangMasuk(id);
-      navigate("/barangmasuk");
+      navigate('/barangmasuk');
     } catch (e) {
       console.log(e);
     }
@@ -53,32 +53,32 @@ export default function BarangMasukDetails() {
         <Skeleton height="300px" my="6" />
       ) : (
         <Flex my="6">
-          <Box w="300px">
+          {/* <Box w="300px">
             <Image
               src={`http://localhost:8000/${barangmasuk.image}`}
               alt={barangmasuk.nama_barang}
             />
-          </Box>
+          </Box> */}
           <Box ml="8">
             <Heading as="h1" size="lg">
-              {barangmasuk.nama_barang}
+              {barangMasuk.nama_barang}
             </Heading>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              ID Barang: {barangmasuk.id_barang}
+              ID Masuk: {barangMasuk.id_masuk}
             </Text>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              Tanggal: {barangmasuk.tanggal}
+              ID Barang: {barangMasuk.id_barang}
             </Text>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500">
-              Kategori: {barangmasuk.kategori}
+              Tanggal: {barangMasuk.tanggal}
             </Text>
             <Text fontSize="xl" fontWeight="semibold" color="gray.500" mb="4">
-              Jumlah: {barangmasuk.jumlah}
+              Jumlah: {barangMasuk.jumlah}
             </Text>
           </Box>
         </Flex>
       )}
-      {localStorage.getItem("token") && (
+      {localStorage.getItem('token') && (
         <HStack>
           <Popover>
             <PopoverTrigger>
@@ -96,7 +96,7 @@ export default function BarangMasukDetails() {
               </Button>
             </PopoverContent>
           </Popover>
-          <Link to={`/barangmasuk/${id}`}>
+          <Link to={`/editbarangmasuk/${id}`}>
             <Button>Edit</Button>
           </Link>
         </HStack>

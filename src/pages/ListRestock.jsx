@@ -1,5 +1,6 @@
-import { VStack, Table, Thead, Tbody, Tr, Th, Td, Text, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box, Link } from "@chakra-ui/react"
+import { VStack, Table, Thead, Tbody, Tr, Th, Td, Text, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom";
 import { getAllRestock, deleteRestock } from "../modules/fetch"
 
 export default function Homepage() {
@@ -69,7 +70,7 @@ export default function Homepage() {
                 Restock Barang
             </Text>
             <Button colorScheme="green" size="sm" marginRight="650px">
-                <Link href="/newrestock">Tambah Data</Link>
+                <Link to="/newrestock">Tambah Data</Link>
             </Button>
             <Box w="70%" display="flex" justifyContent="flex-end" alignItems="center" >
                 <p style={{ marginRight: '10px', fontWeight: 'bold' }}>Search : </p>
@@ -103,9 +104,11 @@ export default function Homepage() {
                             <Td>{restock.jumlah}</Td>
                             <Td>{restock.status}</Td>
                             <Td>
-                                <Button colorScheme="blue" size="sm" onClick={() => handleEdit(restock.id_restock)}>
-                                    <Link href="">Edit</Link>
-                                </Button>
+                                <Link to={`/restock/${restock.id_restock}`}>
+                                    <Button colorScheme="blue" size="sm" onClick={() => handleEdit(restock.id_restock)}>
+                                        Edit
+                                    </Button>
+                                </Link>
                             </Td>
                             <Td>
                                 <Menu>

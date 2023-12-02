@@ -24,9 +24,7 @@ async function loginUser(email, password) {
 async function createRestock(formData) {
   console.log('formData ==>', formData)
   try {
-    const response = await instance.post('/restock', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    const response = await instance.post('/restock', formData)
     console.log('response==>', response.data)
     return response.data
   } catch (error) {

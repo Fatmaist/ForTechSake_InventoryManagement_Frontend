@@ -7,10 +7,10 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
-  Image, 
-} from "@chakra-ui/react"
-import { Link } from "react-router-dom"
-import logo from "../assets/images/logo_fts.png"
+  Image,
+} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import logo from "../assets/images/logo_fts.png";
 
 const Navbar = () => {
   return (
@@ -21,56 +21,48 @@ const Navbar = () => {
       p={4}
       spacing={6}
       boxShadow="lg"
-      position="fixed" 
+      position="fixed"
       left={0}
       top={0}
     >
-      <Image src={logo} alt="logo" height={'80px'} width={'200px'} /> 
+      <Image src={logo} alt="logo" height={'80px'} width={'200px'} />
       <Text fontWeight="bold" fontSize="xl">
         Inventory Management
       </Text>
       <Accordion defaultIndex={[0]} allowToggle>
         <AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
+          <AccordionButton>
             <Box flex="1" textAlign="left">
               <Link to="/">Dashboard</Link>
             </Box>
           </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Data Barang
-            </Box>
-          </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Barang Masuk
-            </Box>
-            </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Barang Keluar
-            </Box>
-            </AccordionButton>
-          </AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              <Link to="/data_barang">Item Data</Link>
-            </Box>
-          </AccordionButton>
+        </AccordionItem>
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left">
               Data Barang
             </Box>
           </AccordionButton>
+          <AccordionPanel>
+            <VStack align="start" spacing={2}>
+              <Link to="/data_barang">Item Data</Link>
+              {/* Tambahkan link atau menu lainnya sesuai kebutuhan */}
+            </VStack>
+          </AccordionPanel>
         </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              Barang Masuk
+            </Box>
+          </AccordionButton>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              Barang Keluar
+            </Box>
+          </AccordionButton>
         </AccordionItem>
         <AccordionItem>
           <AccordionButton>
@@ -81,6 +73,7 @@ const Navbar = () => {
         </AccordionItem>
       </Accordion>
     </VStack>
-  )
-}
+  );
+};
 
+export default Navbar;

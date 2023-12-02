@@ -46,7 +46,10 @@ const Navbar = () => {
           <AccordionPanel>
             <VStack align="start" spacing={2}>
               <Link to="/data_barang">Item Data</Link>
-              {/* Tambahkan link atau menu lainnya sesuai kebutuhan */}
+              <Link to="/tambahdata_databarang">Tambah Data</Link>
+              <Link to="/register">Register</Link>
+
+              
             </VStack>
           </AccordionPanel>
         </AccordionItem>

@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 @media screen and (max-width: 600px) {
     .custom-accordion .chakra-accordion__panel:not(:last-of-type) {
         border-bottom: 1px solid #000;
     }
-=======
-@media screen and (max-width: 600px) {
-    .custom-accordion .chakra-accordion__panel:not(:last-of-type) {
-        border-bottom: 1px solid #000;
-    }
->>>>>>> ebb58e66a60be14d34149f9c0b9c9c42dee52ad8
 }

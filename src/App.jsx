@@ -1,14 +1,14 @@
 import { VStack } from "@chakra-ui/react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Navbar from "./components/Navbar"
-import RestockDetails from "./pages/RestockDetail"
-import EditRestock from "./pages/EditRestock"
+import DataBarangDetail from "./pages/DataBarangDetail"
+import EditDataBarang from "./pages/EditDataBarang"
 import Homepage from "./pages/Homepage"
-import NewRestockPage from "./pages/NewRestock"
+import NewDataBarang from "./pages/NewDataBarang"
 import Register from "./pages/Register"
 // import PrivateRoute from "../src/components/PrivateRoute"
-import ListRestock from "./pages/ListRestock"
-import TambahData_Restock from "./pages/TambahData_Restock"
+import ListDataBarang from "./pages/ListDataBarang"
+import TambahData_DataBarang from "./pages/TambahData_DataBarang"
 
 function App() {
   return (
@@ -16,14 +16,14 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* <Route path="/restock" element={<restock_barang />} /> */}
+          {/* <Route path="/data_barang" element={< Data_Barang />} /> */}
           <Route path={"/"} element={<Homepage />} />
-          <Route path={"/restock"} element={<ListRestock />} />
-          <Route path={"/tambahdata_restock"} element={<TambahData_Restock />} />
+          <Route path={"/data_barang"} element={<ListDataBarang />} />
+          <Route path={"/tambahdata_databarang"} element={<TambahData_DataBarang />} />
           <Route path={"/register"} element={<Register />} />
-          <Route path={"/newrestock"} element={<NewRestockPage />} />
-          <Route path={"/restock/:id"} element={<RestockDetails />} />
-          <Route path={"/restock/:id_restock"} element={<EditRestock />} />
+          <Route path={"/newdatabarang"} element={<NewDataBarang />} />
+          <Route path={"/data_barang/:id"} element={<DataBarangDetail />} />
+          <Route path={"/data_barang/:id_barang"} element={<EditDataBarang />} />
         </Routes>
       </Router>
     </VStack>

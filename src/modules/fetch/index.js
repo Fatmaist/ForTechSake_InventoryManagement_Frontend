@@ -6,7 +6,7 @@ async function createDataBarang({
   nama_barang,
   stok,
   id_kategori,
-  id_supplier
+  id_supplier,
 }) {
   try {
     const response = await instance.post("/data_barang", {
@@ -38,7 +38,7 @@ async function editDataBarang({
   nama_barang,
   stok,
   id_kategori,
-  id_supplier
+  id_supplier,
 }) {
   try {
     const response = await instance.put(`/data_barang/${id_barang}`, {
@@ -74,7 +74,7 @@ async function getDataBarangDetailById(id_barang) {
 }
 
 // Function to get all Kategori Barang
-async function getAllKategoriBarang() {
+async function getAllDataKategori() {
   try {
     const response = await instance.get("/kategori_barang");
     return response.data;
@@ -99,6 +99,6 @@ export {
   editDataBarang,
   deleteDataBarang,
   getDataBarangDetailById,
-  getAllKategoriBarang,
+  getAllDataKategori,
   getAllDataSupplier,
 };

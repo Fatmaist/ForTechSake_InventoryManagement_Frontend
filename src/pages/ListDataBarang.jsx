@@ -89,12 +89,13 @@ export default function ListDataBarang() {
             <Table variant="simple" w="70%" p={6} marginRight={-300}>
                 <Thead>
                     <Tr align="center">
-                        <Th textAlign="center">Barang</Th>
-                        <Th textAlign="center">Kategori</Th>
+                        <Th textAlign="center">ID Barang</Th>
+                        <Th textAlign="center">Nama Barang</Th>
+                        <Th textAlign="center">ID Kategori</Th>
                         <Th textAlign="center">Stok</Th>
                         <Th textAlign="center">ID Supplier</Th>
-                        <Th textAlign="center">Aksi</Th>
-                        <Th textAlign="center"></Th>
+                        <Th textAlign="center">Edit</Th>
+                        <Th textAlign="center">Hapus</Th>
                     </Tr>
                 </Thead>
                 <Tbody>

@@ -32,7 +32,7 @@ const Login = () => {
             <Box flex="1" mr="8" bg="blue.200">
             <Box p="4">
                 <Heading as="h2" size="lg" mb="4">
-                Nama Perusahaan
+                For Tech's Sake Inventory Management System
                 </Heading>
                 <Box w="100%" h="200px" bg="gray.200" mb="4" />
                 <p>Selamat datang di sistem kami. Silakan login untuk melanjutkan.</p>

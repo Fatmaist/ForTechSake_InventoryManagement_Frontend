@@ -1,45 +1,44 @@
-import { VStack, Table, Thead, Tbody, Tr, Th, Td, Text, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box } from "@chakra-ui/react"
+import { VStack, Table, Thead, Tbody, Tr, Th, Td, Text, Button, Menu, MenuButton, MenuList, MenuItem, HStack, Input, Box, Link } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom";
-import { getAllRestock, deleteRestock } from "../modules/fetch"
+import { getAllKeluar, deleteKeluar } from "../modules/fetch"
 
 export default function Homepage() {
-    const [restocks, setRestocks] = useState([])
+    const [keluar, setKeluar] = useState([])
     const [startIndex, setStartIndex] = useState(0)
     const [searchQuery, setSearchQuery] = useState("")
-    const [filteredRestocks, setFilteredRestocks] = useState([])
+    const [filteredKeluar, setFilteredKeluar] = useState([])
 
     useEffect(() => {
-        const fetchRestocks = async () => {
-            const restocksData = await getAllRestock()
-            setRestocks(restocksData)
-            setFilteredRestocks(restocksData)
+        const fetchKeluar = async () => {
+            const keluarData = await getAllKeluar()
+            setKeluar(keluarData)
+            setFilteredKeluar(keluarData)
         }
-        fetchRestocks()
+        fetchKeluar()
     }, [])
 
-    const handleEdit = (id_restock) => {
-        console.log(`Edit item with ID: ${id_restock}`)
+    const handleEdit = (id_keluar) => {
+        console.log(`Edit item with ID: ${id_keluar}`)
     }
 
-    const handleDelete = async (id_restock) => {
+    const handleDelete = async (id_keluar) => {
         try {
-            await deleteRestock(id_restock)
-            const updatedRestocks = restocks.filter((restock) => restock.id_restock !== id_restock)
-            setRestocks(updatedRestocks)
-            setFilteredRestocks(updatedRestocks)
+            await deleteKeluar(id_restock)
+            const updatedKeluar = Keluar.filter((keluar) => Keluar.id_keluar !== id_keluar)
+            setRestocks(updatedKeluar)
+            setFilteredKeluar(updatedKeluar)
         } catch (error) {
             console.error("Error deleting item:", error)
         }
     }
 
-    const handleContextMenu = (e, restock) => {
+    const handleContextMenu = (e, keluar) => {
         e.preventDefault()
-        console.log(`Right-clicked item with ID: ${restock.id_restock}`)
+        console.log(`Right-clicked item with ID: ${keluar.id_keluar}`)
     }
 
     const onNext = () => {
-        if (startIndex + 5 < filteredRestocks.length) {
+        if (startIndex + 5 < filteredkeluar.length) {
             setStartIndex(startIndex + 5)
         }
     }
@@ -52,25 +51,25 @@ export default function Homepage() {
 
     const handleSearch = (query) => {
         setSearchQuery(query)
-        const filtered = restocks.filter(
-            (restock) =>
-                restock.id_barang.toString().includes(query.toLowerCase()) ||
-                restock.nama_barang.toLowerCase().includes(query.toLowerCase())
+        const filtered = keluar.filter(
+            (keluar) =>
+                keluar.id_barang.toString().includes(query.toLowerCase()) ||
+                keluar.nama_barang.toLowerCase().includes(query.toLowerCase())
         )
-        setFilteredRestocks(filtered)
+        setFilteredKeluar(filtered)
         setStartIndex(0)
     }
 
     const currentPage = Math.ceil((startIndex + 1) / 5)
-    const totalPages = Math.ceil(filteredRestocks.length / 5)
+    const totalPages = Math.ceil(filteredKeluar.length / 5)
 
     return (
         <VStack w="100vw" align="center" bg="" marginTop="50px">
             <Text fontSize="xl" fontWeight="bold" marginBottom="20px">
-                Restock Barang
+                Barang Keluar
             </Text>
             <Button colorScheme="green" size="sm" marginRight="650px">
-                <Link to="/newrestock">Tambah Data</Link>
+                <Link href="/newrestock">Tambah Data</Link>
             </Button>
             <Box w="70%" display="flex" justifyContent="flex-end" alignItems="center" >
                 <p style={{ marginRight: '10px', fontWeight: 'bold' }}>Search : </p>
@@ -90,25 +89,23 @@ export default function Homepage() {
                         <Th textAlign="center">Nama Barang</Th>
                         <Th textAlign="center">Tanggal</Th>
                         <Th textAlign="center">Jumlah</Th>
-                        <Th textAlign="center">Status</Th>
+                        <Th textAlign="center">Tempat Distribusi</Th>
                         <Th textAlign="center">Aksi</Th>
                         <Th textAlign="center"></Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {filteredRestocks.slice(startIndex, startIndex + 5).map((restock) => (
-                        <Tr key={restock.id_restock} onContextMenu={(e) => handleContextMenu(e, restock)}>
-                            <Td>{restock.id_barang}</Td>
-                            <Td>{restock.nama_barang}</Td>
-                            <Td>{restock.tanggal}</Td>
-                            <Td>{restock.jumlah}</Td>
-                            <Td>{restock.status}</Td>
+                    {filteredKeluar.slice(startIndex, startIndex + 5).map((keluar) => (
+                        <Tr key={keluar.id_keluar} onContextMenu={(e) => handleContextMenu(e, keluar)}>
+                            <Td>{keluar.id_barang}</Td>
+                            <Td>{keluar.nama_barang}</Td>
+                            <Td>{keluar.tanggal}</Td>
+                            <Td>{keluar.jumlah}</Td>
+                            <Td>{keluar.tempat_distributor}</Td>
                             <Td>
-                                <Link to={`/restock/${restock.id_restock}`}>
-                                    <Button colorScheme="blue" size="sm" onClick={() => handleEdit(restock.id_restock)}>
-                                        Edit
-                                    </Button>
-                                </Link>
+                                <Button colorScheme="blue" size="sm" onClick={() => handleEdit(keluar.id_keluar)}>
+                                    <Link href="">Edit</Link>
+                                </Button>
                             </Td>
                             <Td>
                                 <Menu>
@@ -116,7 +113,7 @@ export default function Homepage() {
                                         Hapus
                                     </MenuButton>
                                     <MenuList>
-                                        <MenuItem onClick={() => handleDelete(restock.id_restock)}>Hapus</MenuItem>
+                                        <MenuItem onClick={() => handleDelete(keluar.id_keluar)}>Hapus</MenuItem>
                                     </MenuList>
                                 </Menu>
                             </Td>
@@ -138,4 +135,3 @@ export default function Homepage() {
         </VStack>
     )
 }
-

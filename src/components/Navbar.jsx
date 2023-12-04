@@ -26,7 +26,7 @@ const Navbar = () => {
       p={4}
       spacing={6}
       boxShadow="lg"
-      position="fixed" 
+      position="fixed"
       left={0}
       top={0}
     >
@@ -43,46 +43,62 @@ const Navbar = () => {
       </Text>
       <Accordion defaultIndex={[0]} allowToggle>
         <AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
+          <AccordionButton>
             <Box flex="1" textAlign="left">
               <Link to="/">Dashboard</Link>
             </Box>
           </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
             <Box flex="1" textAlign="left">
               Data Barang
             </Box>
           </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Barang Masuk
-            </Box>
-            </AccordionButton>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Barang Keluar
-            </Box>
-            </AccordionButton>
-          </AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              <Link to="/restock">Restock Data</Link>
-            </Box>
-          </AccordionButton>
+          <AccordionPanel>
+            <VStack align="start" spacing={2}>
+              <Link to="/data_barang">Item Data</Link>
+              <Link to="/tambahdata_databarang">Tambah Data</Link>
+              <Link to="/register">Register</Link>
+
+              
+            </VStack>
+          </AccordionPanel>
+        </AccordionItem>
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left">
-              Data Supplier
+              <Link to="/barangmasuk">Barang Masuk</Link>
             </Box>
           </AccordionButton>
         </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              <Link to="/barangkeluar">Barang Keluar</Link>
+            </Box>
+          </AccordionButton>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              <Link to="/restock">Restock Barang</Link>
+            </Box>
+          </AccordionButton>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              <Link to="/data_supplier">Data Supplier</Link>
+            </Box>
+          </AccordionButton>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              <Link to="/datapetugas">Data Petugas</Link>
+            </Box>
+          </AccordionButton>
         </AccordionItem>
         <AccordionItem>
           <AccordionButton>
@@ -93,7 +109,7 @@ const Navbar = () => {
         </AccordionItem>
       </Accordion>
     </VStack>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
